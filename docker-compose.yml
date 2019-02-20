@@ -1,0 +1,22 @@
+version: '2'
+services:
+  wordpress:
+    env_file: .env
+    image: liginccojp/wordpress
+    mem_limit: 256m
+    depends_on:
+      - mysql
+    ports:
+      - 80:80
+    links:
+      - mysql:mysql
+    volumes:
+      - ./wp:/var/www/html
+  mysql:
+    env_file: .env
+    image: mysql:5.7
+    mem_limit: 256m
+    ports:
+      - 3306:3306
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:rw
